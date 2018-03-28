@@ -18,21 +18,25 @@
 
 package org.apache.flink.client_for_testing;
 
+import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.io.CsvReader;
 import org.apache.flink.api.java.operators.DataSource;
 import org.apache.flink.api.java.tuple.Tuple3;
+import org.apache.flink.api.java.typeutils.TypeExtractionUtils;
+import org.apache.flink.api.java.typeutils.TypeExtractor;
 import org.apache.flink.client_for_testing.model.CustomType;
 import org.apache.flink.client_for_testing.model.CustomTypeInfo;
 import org.apache.flink.client_for_testing.model.CustomTypeStringParser;
-import org.apache.flink.types.CustomTypeInfoRegister;
 import org.apache.flink.types.parser.FieldParser;
 import org.apache.flink.types.parser.ParserFactory;
 
 public class ClientJob {
 
 	public static void main(String[] args) throws Exception {
-        CustomTypeInfoRegister.getInstance().registerType(CustomType.class, new CustomTypeInfo());
+        TypeInformation<CustomType> of = TypeInformation.of(CustomType.class);
+
+
         ParserFactory<CustomType> factory = new ParserFactory<CustomType>() {
             @Override
             public FieldParser<CustomType> create(Class<? extends FieldParser<CustomType>> parserType) {
@@ -47,10 +51,11 @@ public class ClientJob {
                 factory
         );
 
-		CsvReader csvReader = new CsvReader("C:\\Users\\Dmitrii_Kober\\Projects\\flink-starter\\flink-java-project\\src\\main\\resources\\custom_type_field.csv", ExecutionEnvironment.getExecutionEnvironment());
+		CsvReader csvReader = new CsvReader("D:\\Projects\\flink\\flink-test-client\\src\\main\\resources\\custom_type_field.csv", ExecutionEnvironment.getExecutionEnvironment());
 		csvReader.fieldDelimiter(",");
-		csvReader.parseQuotedStrings('"');
+        csvReader.parseQuotedStrings('\'');
 		DataSource<Tuple3<Integer, String, CustomType>> dataSource = csvReader.types(int.class, String.class, CustomType.class);
 		dataSource.print();
-	}
+        System.out.println();
+    }
 }

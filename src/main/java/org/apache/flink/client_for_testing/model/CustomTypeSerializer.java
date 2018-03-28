@@ -65,15 +65,10 @@ public class CustomTypeSerializer extends TypeSerializerSingleton<CustomType> {
 	@Override
 	public CustomType deserialize(DataInputView source) throws IOException {
 		int payloadLength = source.readInt();
-		String fieldStr;
-		if (payloadLength == 0) {
-			fieldStr = source.readUTF();
-		}
-		else {
-			byte[] payload = new byte[payloadLength];
-			source.readFully(payload);
-			fieldStr = new String(payload);
-		}
+		byte[] payload = new byte[payloadLength];
+		source.readFully(payload);
+		String fieldStr = new String(payload);
+
 		ObjectMapper mapper = new ObjectMapper();
 		CustomType customType = mapper.readValue(fieldStr, CustomType.class);
 		return customType;

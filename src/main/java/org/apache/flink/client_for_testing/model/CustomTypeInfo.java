@@ -26,7 +26,7 @@ public class CustomTypeInfo extends TypeInformation<CustomType> {
 
 	@Override
 	public int getTotalFields() {
-		return 1;
+		return 2;
 	}
 
 	@SuppressWarnings("unchecked")
