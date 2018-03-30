@@ -1,4 +1,4 @@
-package org.apache.flink.client_for_testing.model;
+package org.apache.flink.client.model.json;
 
 import org.apache.flink.api.common.ExecutionConfig;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
@@ -7,7 +7,7 @@ import org.apache.flink.api.common.typeutils.TypeSerializer;
 /**
  * Created by Dmitrii_Kober on 3/27/2018.
  */
-public class CustomTypeInfo extends TypeInformation<CustomType> {
+public class CustomJsonTypeInfo extends TypeInformation<CustomJsonType> {
 
 	@Override
 	public boolean isBasicType() {
@@ -21,18 +21,18 @@ public class CustomTypeInfo extends TypeInformation<CustomType> {
 
 	@Override
 	public int getArity() {
-		return 1;
+		return 2;
 	}
 
 	@Override
 	public int getTotalFields() {
-		return 2;
+		return 3;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Class<CustomType> getTypeClass() {
-		return CustomType.class;
+	public Class<CustomJsonType> getTypeClass() {
+		return CustomJsonType.class;
 	}
 
 	@Override
@@ -41,20 +41,20 @@ public class CustomTypeInfo extends TypeInformation<CustomType> {
 	}
 
 	@Override
-	public TypeSerializer<CustomType> createSerializer(ExecutionConfig config) {
-		return new CustomTypeSerializer();
+	public TypeSerializer<CustomJsonType> createSerializer(ExecutionConfig config) {
+		return new CustomJsonTypeSerializer();
 	}
 
 	@Override
 	public String toString() {
-		return CustomType.class.toString();
+		return CustomJsonType.class.toString();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CustomTypeInfo) {
+		if (obj instanceof CustomJsonTypeInfo) {
 			@SuppressWarnings("unchecked")
-			CustomTypeInfo thatCustomTypeInfo = (CustomTypeInfo) obj;
+			CustomJsonTypeInfo thatCustomTypeInfo = (CustomJsonTypeInfo) obj;
 
 			return thatCustomTypeInfo.canEqual(this);
 		} else {
@@ -64,11 +64,11 @@ public class CustomTypeInfo extends TypeInformation<CustomType> {
 
 	@Override
 	public int hashCode() {
-		return CustomType.class.hashCode();
+		return CustomJsonType.class.hashCode();
 	}
 
 	@Override
 	public boolean canEqual(Object obj) {
-		return obj instanceof CustomTypeInfo;
+		return obj instanceof CustomJsonTypeInfo;
 	}
 }

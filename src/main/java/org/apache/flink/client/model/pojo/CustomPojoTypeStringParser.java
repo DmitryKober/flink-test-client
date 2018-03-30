@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-package org.apache.flink.client_for_testing.model;
+package org.apache.flink.client.model.pojo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.flink.client.model.json.CustomJsonType;
 import org.apache.flink.types.parser.FieldParser;
 import org.apache.flink.types.parser.StringParser;
 
@@ -27,23 +28,23 @@ import java.io.IOException;
 /**
  * Created by Dmitrii_Kober on 3/27/2018.
  */
-public class CustomTypeStringParser extends FieldParser<CustomType> {
+public class CustomPojoTypeStringParser extends FieldParser<CustomPojoType> {
 
 	private final StringParser stringParser = new StringParser();
     {
         stringParser.enableQuotedStringParsing((byte)'\'');
     }
 
-	private CustomType lastResult;
+	private CustomPojoType lastResult;
 
 	@Override
-	protected int parseField(byte[] bytes, int startPos, int limit, byte[] delim, CustomType reuse) {
+	protected int parseField(byte[] bytes, int startPos, int limit, byte[] delim, CustomPojoType reuse) {
         stringParser.parseField(bytes, startPos, limit, delim, null);
         String stringRepresentation = stringParser.getLastResult();
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            lastResult = mapper.readValue(stringRepresentation, CustomType.class);
+            lastResult = mapper.readValue(stringRepresentation, CustomPojoType.class);
             return 0;
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,12 +53,12 @@ public class CustomTypeStringParser extends FieldParser<CustomType> {
 	}
 
 	@Override
-	public CustomType getLastResult() {
+	public CustomPojoType getLastResult() {
 		return lastResult;
 	}
 
 	@Override
-	public CustomType createValue() {
-		return new CustomType();
+	public CustomPojoType createValue() {
+		return new CustomPojoType();
 	}
 }

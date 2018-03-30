@@ -20,8 +20,8 @@ under the License.
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.apache.flink.quickstart</groupId>
-	<artifactId>flink-java-project</artifactId>
+	<groupId>org.apache.flink.testing</groupId>
+	<artifactId>flink-csv-reader-tests</artifactId>
 	<version>0.1</version>
 	<packaging>jar</packaging>
 
@@ -38,6 +38,13 @@ under the License.
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-java</artifactId>
+			<version>${flink.version}</version>
+			<!--<scope>provided</scope>-->
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-runtime_${scala.binary.version}</artifactId>
 			<version>${flink.version}</version>
 			<!--<scope>provided</scope>-->
 		</dependency>

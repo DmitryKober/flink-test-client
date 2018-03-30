@@ -1,27 +1,20 @@
-package org.apache.flink.client_for_testing.model;
+package org.apache.flink.client.model.json;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.flink.api.common.typeutils.base.StringSerializer;
 import org.apache.flink.api.common.typeutils.base.TypeSerializerSingleton;
 import org.apache.flink.core.memory.DataInputView;
 import org.apache.flink.core.memory.DataOutputView;
-import org.apache.flink.types.ByteValue;
 import org.apache.flink.types.StringValue;
-import org.apache.flink.types.parser.FieldParser;
-import org.apache.flink.types.parser.StringParser;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * Created by Dmitrii_Kober on 3/27/2018.
  */
-public class CustomTypeSerializer extends TypeSerializerSingleton<CustomType> {
+public class CustomJsonTypeSerializer extends TypeSerializerSingleton<CustomJsonType> {
 
-	public CustomTypeSerializer() {
+	public CustomJsonTypeSerializer() {
 	}
 
 	@Override
@@ -30,19 +23,19 @@ public class CustomTypeSerializer extends TypeSerializerSingleton<CustomType> {
 	}
 
 	@Override
-	public CustomType createInstance() {
-		return new CustomType();
+	public CustomJsonType createInstance() {
+		return new CustomJsonType();
 	}
 
 	@Override
-	public CustomType copy(CustomType from) {
-		CustomType newInstance = new CustomType();
+	public CustomJsonType copy(CustomJsonType from) {
+		CustomJsonType newInstance = new CustomJsonType();
 		newInstance.setF1(from.getF1());
 		return newInstance;
 	}
 
 	@Override
-	public CustomType copy(CustomType from, CustomType reuse) {
+	public CustomJsonType copy(CustomJsonType from, CustomJsonType reuse) {
 		reuse.setF1(from.getF1());
 		return reuse;
 	}
@@ -53,7 +46,7 @@ public class CustomTypeSerializer extends TypeSerializerSingleton<CustomType> {
 	}
 
 	@Override
-	public void serialize(CustomType record, DataOutputView target) throws IOException {
+	public void serialize(CustomJsonType record, DataOutputView target) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		String recordStr = mapper.writeValueAsString(record);
 		byte[] payload = recordStr.getBytes();
@@ -63,23 +56,23 @@ public class CustomTypeSerializer extends TypeSerializerSingleton<CustomType> {
 	}
 
 	@Override
-	public CustomType deserialize(DataInputView source) throws IOException {
+	public CustomJsonType deserialize(DataInputView source) throws IOException {
 		int payloadLength = source.readInt();
 		byte[] payload = new byte[payloadLength];
 		source.readFully(payload);
 		String fieldStr = new String(payload);
 
 		ObjectMapper mapper = new ObjectMapper();
-		CustomType customType = mapper.readValue(fieldStr, CustomType.class);
+		CustomJsonType customType = mapper.readValue(fieldStr, CustomJsonType.class);
 		return customType;
 	}
 
 	@Override
-	public CustomType deserialize(CustomType reuse, DataInputView source) throws IOException {
+	public CustomJsonType deserialize(CustomJsonType reuse, DataInputView source) throws IOException {
 
 		String fieldStr = source.readUTF();
 		ObjectMapper mapper = new ObjectMapper();
-		CustomType customType = mapper.readValue(fieldStr, CustomType.class);
+		CustomJsonType customType = mapper.readValue(fieldStr, CustomJsonType.class);
 		reuse.setF1(customType.getF1());
 		return reuse;
 	}
