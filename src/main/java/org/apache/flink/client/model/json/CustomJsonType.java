@@ -1,7 +1,5 @@
 package org.apache.flink.client.model.json;
 
-import org.apache.flink.api.common.typeinfo.TypeInfo;
-
 /**
  * Created by Dmitrii_Kober on 3/27/2018.
  */

@@ -19,28 +19,16 @@
 package org.apache.flink.client.model.pojo;
 
 import org.apache.flink.api.common.serialization.SerializationSchema;
-import org.apache.flink.api.common.serialization.TypeInformationSerializationSchema;
-import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.api.common.typeutils.TypeSerializer;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.io.CsvReader;
 import org.apache.flink.api.java.operators.DataSource;
 import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.api.java.typeutils.PojoTypeInfo;
 import org.apache.flink.api.java.typeutils.TypeExtractor;
-import org.apache.flink.api.java.typeutils.runtime.PojoSerializer;
-import org.apache.flink.client.model.json.CustomJsonType;
-import org.apache.flink.client.model.json.CustomJsonTypeStringParser;
-import org.apache.flink.client.model.json.NestedCustomJsonType;
-import org.apache.flink.core.memory.DataInputView;
-import org.apache.flink.core.memory.DataInputViewStreamWrapper;
 import org.apache.flink.core.memory.DataOutputView;
 import org.apache.flink.core.memory.DataOutputViewStreamWrapper;
 import org.apache.flink.types.parser.FieldParser;
 import org.apache.flink.types.parser.ParserFactory;
-
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 
 public class PojoTypeInfoTestJob {
 

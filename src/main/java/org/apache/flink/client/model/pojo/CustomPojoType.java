@@ -1,9 +1,5 @@
 package org.apache.flink.client.model.pojo;
 
-import org.apache.flink.api.common.typeinfo.TypeInfo;
-import org.apache.flink.client.model.json.CustomJsonTypeInfoFactory;
-import org.apache.flink.client.model.json.NestedCustomJsonType;
-
 /**
  * Created by Dmitrii_Kober on 3/27/2018.
  */

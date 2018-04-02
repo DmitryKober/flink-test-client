@@ -19,7 +19,6 @@
 package org.apache.flink.client.model.pojo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.flink.client.model.json.CustomJsonType;
 import org.apache.flink.types.parser.FieldParser;
 import org.apache.flink.types.parser.StringParser;
 

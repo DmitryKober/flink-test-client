@@ -1,16 +1,13 @@
 package org.apache.flink.client.model.pojo;
 
-import javassist.tools.reflect.Reflection;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.flink.api.common.ExecutionConfig;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.api.common.typeutils.CompositeType;
 import org.apache.flink.api.common.typeutils.TypeComparator;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
 import org.apache.flink.api.java.typeutils.PojoField;
 import org.apache.flink.api.java.typeutils.PojoTypeInfo;
 import org.apache.flink.api.java.typeutils.runtime.PojoSerializer;
-import org.apache.flink.util.ReflectionUtil;
 
 import java.util.Arrays;
 import java.util.List;
