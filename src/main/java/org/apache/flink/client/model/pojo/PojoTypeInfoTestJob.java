@@ -75,15 +75,20 @@ public class PojoTypeInfoTestJob {
             }
         };
 
+        ParserFactory<CustomPojoType> parserFactory = new ParserFactory<CustomPojoType>() {
+            @Override
+            public Class<? extends FieldParser<CustomPojoType>> getParserType() {
+                return CustomPojoTypeStringParser.class;
+            }
+
+            @Override
+            public FieldParser<CustomPojoType> create() {
+                return new CustomPojoTypeStringParser();
+            }
+        };
         FieldParser.registerCustomParser(
                 CustomPojoType.class,
-                (Class<FieldParser<CustomPojoType>>) (Class<?>) CustomPojoTypeStringParser.class,
-                new ParserFactory<CustomPojoType>() {
-                    @Override
-                    public FieldParser<CustomPojoType> create(Class<? extends FieldParser<CustomPojoType>> aClass) {
-                        return new CustomPojoTypeStringParser();
-                    }
-                }
+                parserFactory
         );
 
 

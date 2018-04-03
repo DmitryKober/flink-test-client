@@ -19,11 +19,13 @@
 package org.apache.flink.client.model.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.io.CsvReader;
 import org.apache.flink.api.java.operators.DataSource;
+import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.types.parser.FieldParser;
 import org.apache.flink.types.parser.ParserFactory;
 
@@ -44,7 +46,8 @@ public class JsonTypeInfoTestJob {
             }
         };
 
-        TypeInformation<CustomJsonType<NestedCustomJsonType>> typeInfo = TypeInformation.of(new TypeHint<CustomJsonType<NestedCustomJsonType>>(){});
+        TypeHint<CustomJsonType<NestedCustomJsonType>> typeHint = new TypeHint<CustomJsonType<NestedCustomJsonType>>() {};
+        TypeInformation<CustomJsonType<NestedCustomJsonType>> typeInfo = TypeInformation.of(typeHint);
         Class<CustomJsonType<NestedCustomJsonType>> type = typeInfo.getTypeClass();
 
         FieldParser.registerCustomParser(type,factory);
@@ -56,5 +59,18 @@ public class JsonTypeInfoTestJob {
         DataSource<ResultContainer> tuple3DataSource = csvReader.tupleType(ResultContainer.class);
         tuple3DataSource.print();
 
+        DataSource<Tuple3<Integer, String, CustomJsonType<NestedCustomJsonType>>> types = csvReader.types(
+                BasicTypeInfo.INT_TYPE_INFO.getTypeClass(),
+                BasicTypeInfo.STRING_TYPE_INFO.getTypeClass(),
+                typeInfo.getTypeClass()
+        );
+        types.print();
+
+        DataSource<Tuple3<Integer, String, CustomJsonType<NestedCustomJsonType>>> newTypes = csvReader.preciseTypes(
+                BasicTypeInfo.INT_TYPE_INFO,
+                BasicTypeInfo.STRING_TYPE_INFO,
+                typeInfo
+        );
+        newTypes.print();
     }
 }
